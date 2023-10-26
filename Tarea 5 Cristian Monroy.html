@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplicación: Calculadora de salarios</title>
+</head>
+<body>
+    <h1>Calculadora de salarios y boletos de ornato</h1>
+    <h4>Calculadora para el control de salarios, bonificaciones, horas extras y el boleto de ornato de los empleados actuales.</h4>
+
+    <style>
+        body {
+            background-color: #68c3a3;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+        }
+        h4 {
+            font-family: Arial, sans-serif;
+        }
+        p {
+            font-family: Arial, sans-serif;
+        }
+        ul {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+
+    <button onclick="iniciarCalculadora()">Iniciar Calculadora</button>
+
+    <div id="resultados" style="display:none;">
+        <h2>Resultados:</h2>
+        <ul id="listaResultados"></ul>
+        <p>Horas Extras Acumuladas: <span id="horasExtrasAcumuladas">0</span> horas</p>
+        <p>Suma de Salarios: $<span id="sumaSalariosResultado"></span></p>
+        <p>Promedio de Salarios: $<span id="promedioSalariosResultado"></span></p>
+    </div>
+
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfy3C3RzAwSkjzd-RHoeyoDRdeRfxy0prxSA&usqp=CAU" height="250px" width="250px" alt="Logo de la Empresa">
+    </div>
+
+    <script>
+        let cantidadEmpleados;
+        let empleados = [];
+        let sumaSalarios = 0;
+        let horasExtrasAcumuladas = 0;
+
+        function iniciarCalculadora() {
+            cantidadEmpleados = parseInt(prompt("Ingrese la cantidad de empleados"));
+            const listaResultados = document.getElementById("listaResultados");
+            listaResultados.innerHTML = "";
+
+            for (let i = 0; i < cantidadEmpleados; i++) {
+                const nombre = prompt(`Empleado ${i + 1}: Nombre`);
+                const apellido = prompt(`Empleado ${i + 1}: Apellido`);
+                const salarioMensual = parseFloat(prompt(`Empleado ${i + 1}: Salario Mensual`));
+                const bonificacion = parseFloat(prompt(`Empleado ${i + 1}: Bonificación`));
+
+                let horasExtras = 0;
+                let horasExtrasInput;
+                do {
+                    horasExtrasInput = parseFloat(prompt(`Empleado ${i + 1}: Horas Extras (Ingrese -1 para terminar el ingreso de horas extras)`));
+                    if (horasExtrasInput > 0) {
+                        horasExtras += horasExtrasInput;
+                    }
+                } while (horasExtrasInput > 0);
+
+                const igss = salarioMensual * 0.04;
+                const salarioARecibir = salarioMensual - igss + bonificacion + horasExtras;
+
+                // Calcular boleto de ornato y multa según el salario
+                let boletoDeOrnato = 0;
+                let multa = 0;
+
+                if (salarioMensual >= 500.01 && salarioMensual <= 1000.00) {
+                    boletoDeOrnato = 10.00;
+                    multa = 20.00;
+                } else if (salarioMensual >= 1000.01 && salarioMensual <= 3000.00) {
+                    boletoDeOrnato = 15.00;
+                    multa = 30.00;
+                } else if (salarioMensual >= 3000.01 && salarioMensual <= 6000.00) {
+                    boletoDeOrnato = 50.00;
+                    multa = 1000.00;
+                } else if (salarioMensual >= 6000.01 && salarioMensual <= 9000.00) {
+                    boletoDeOrnato = 75.00;
+                    multa = 150.00;
+                } else if (salarioMensual >= 9000.01 && salarioMensual <= 12000.00) {
+                    boletoDeOrnato = 100.00;
+                    multa = 200.00;
+                } else if (salarioMensual > 12000.00) {
+                    boletoDeOrnato = 150.00;
+                    multa = 300.00;
+                }
+
+                sumaSalarios += salarioARecibir;
+                horasExtrasAcumuladas += horasExtras;
+
+                empleados.push({
+                    nombre,
+                    apellido,
+                    salarioMensual,
+                    igss,
+                    bonificacion,
+                    horasExtras,
+                    salarioARecibir,
+                    boletoDeOrnato,
+                    multa
+                });
+
+                const resultadoEmpleado = `Empleado ${i + 1}: ${nombre} ${apellido}, Salario a Recibir: $${salarioARecibir.toFixed(2)}, Boleto de Ornato: $${boletoDeOrnato}, Multa: $${multa}`;
+                const resultadoItem = document.createElement("li");
+                resultadoItem.textContent = resultadoEmpleado;
+                listaResultados.appendChild(resultadoItem);
+            }
+
+            // Mostrar resultados en la página
+            const resultadosDiv = document.getElementById("resultados");
+            resultadosDiv.style.display = "block";
+            document.getElementById("horasExtrasAcumuladas").textContent = horasExtrasAcumuladas;
+            document.getElementById("sumaSalariosResultado").textContent = sumaSalarios.toFixed(2);
+            document.getElementById("promedioSalariosResultado").textContent = (sumaSalarios / cantidadEmpleados).toFixed(2);
+        }
+    </script>
+</body>
+</html>
+
+
