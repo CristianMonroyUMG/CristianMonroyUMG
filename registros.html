@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro en Curso</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+	
+	h1 {
+	   color: #fff;
+	}
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            display: inline-block;
+            vertical-align: top;
+            width: 40%;
+            margin-right: 5%;
+        }
+
+        #cursoContent {
+            display: none;
+            vertical-align: top;
+            width: 100%;
+        }
+
+        #cursoContent img {
+            float: center;
+            max-width: 200px;
+	    margin-top: 5px;
+	    margin-bottom: 20px;
+        }
+
+        #cursoContent video {
+            float: center;
+            max-width: 100%;
+	    margin-right: 30px;
+	    margin-top: 15px;
+	    margin-bottom: 20px;
+        }
+
+        form label, #evaluacionForm label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+	    padding: 10px 20px; 
+            margin-top: 15px;
+        }
+
+        #evaluacionForm {
+            display: none;
+        }
+
+        #evaluacionForm ol {
+            list-style-type: none;
+            padding: 0;
+            text-align: left; 
+        }
+
+        #evaluacionForm li {
+            margin-bottom: 15px;
+        }
+
+        #calificacion {
+            margin-top: 20px;
+        }
+
+        .mensaje-error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Escuela de Física General</h1>
+	<h3>"Descubre el Universo con la Verdad"</h3>
+	<h5>Cristian Monroy 0901-22-16592</h5>
+    </header>
+
+    <main>
+        <form id="registroForm">
+            <h2>Registro de Estudiante</h2>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" required>
+
+            <button type="button" id="regist" onclick="registrarEstudiante()">Registrarse</button>
+        </form>
+
+        <div id="cursoContent">
+            <h2>¡Bienvenido al Curso!</h2>
+            <p>El curso de Física General proporciona una introducción completa a los principios fundamentales de la física, explorando las leyes que gobiernan el comportamiento del universo a nivel macroscópico y microscópico. Este curso abarca diversas áreas de la física, incluyendo la mecánica clásica, la termodinámica, la óptica, la electricidad y el magnetismo, y la física moderna.</p>
+         
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/73hKZzDoKKk?si=eBIVPPGcqUfwOm31" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <button id="comenzarEvaluacion" style="display: none;" onclick="comenzarEvaluacion()">Comenzar Evaluación</button>
+
+        <p id="mensajeError" class="mensaje-error" style="display: none;">Usuario o contraseña incorrectos.</p>
+    </main>
+
+    <script>
+        function registrarEstudiante() {
+           
+            var nombre = document.getElementById('nombre').value;
+            var email = document.getElementById('email').value;
+
+            var usuario = prompt("Ingresa tu usuario:");
+            var contrasena = prompt("Ingresa tu contraseña:");
+
+            if (usuario === "alumno" && contrasena === "2023") {
+                document.getElementById('cursoContent').style.display = 'block';
+                document.getElementById('comenzarEvaluacion').style.display = 'block';
+                document.getElementById('mensajeError').style.display = 'none';
+            } else {
+                document.getElementById('cursoContent').style.display = 'none';
+                document.getElementById('comenzarEvaluacion').style.display = 'none';
+                document.getElementById('mensajeError').style.display = 'block';
+            }
+        }
+
+        function comenzarEvaluacion() {
+            window.open('evaluacion.html', '_blank');
+        }
+    </script>
+</body>
+</html>
+
