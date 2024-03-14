@@ -1,0 +1,23 @@
+//Cristian Mariano Monroy Fernández 0901-22-16592
+
+const int ledPin = 7; //Pin al que el led está conectado.
+int incomingByte; //Variable que almacena los datos del serial.
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {  // verifica si hay datos seriales entrantes.
+    incomingByte = Serial.read();  // lee el byte más antiguo en el búfer serial.
+  
+    if (incomingByte == 'E') {  // si es una E mayúscula, enciende el LED.
+      digitalWrite(ledPin, HIGH);
+    }
+ 
+    if (incomingByte == 'A') { // si es una A mayúscula, apaga el LED.
+      digitalWrite(ledPin, LOW);
+    }
+  }
+}
